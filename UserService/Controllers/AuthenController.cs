@@ -26,8 +26,8 @@ public class AuthenController : ControllerBase {
 		var result = await userRepository.Login(model);
 		return Ok(result);
 	}
-	[HttpPost("forget-password-request")]	
-	public async Task<IActionResult> ForgetPassword([FromBody]string email) {
+	[HttpPost("forget-password-request")]
+	public async Task<IActionResult> ForgetPassword([FromBody] string email) {
 		await userRepository.ForgetPassword(email);
 		return Ok(new { message = "Reset verify code sent to your email" });
 	}
@@ -35,5 +35,10 @@ public class AuthenController : ControllerBase {
 	public async Task<IActionResult> ResetPassword([FromBody] ChangePasswordDTO model) {
 		var result = await userRepository.ChangePassword(model);
 		return Ok(result);
+	}
+	[HttpGet("logout")]
+	public async Task<IActionResult> Logout() {
+		await userRepository.Logout();
+		return Ok(new { message = "Logout successfully" });
 	}
 }

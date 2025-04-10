@@ -59,6 +59,16 @@ builder.Services.Configure<IdentityOptions>(options => {
 	options.Password.RequireUppercase = false;
 	options.Password.RequiredUniqueChars = 0;
 });
+builder.Services.AddCors(options => {
+	options.AddPolicy("AllowAllOrigins",
+		builder => {
+			builder.WithOrigins("http://localhost:4200")
+				.AllowAnyMethod()
+				.AllowAnyHeader();
+		});
+});
+
+
 
 var app = builder.Build();
 
@@ -69,7 +79,7 @@ if(app.Environment.IsDevelopment()) {
 	app.MapScalarApiReference();
 	app.MapOpenApi();
 }
-
+app.UseCors("AllowAllOrigins");	
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
