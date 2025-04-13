@@ -24,7 +24,7 @@ public class AuthenController : ControllerBase {
 	[HttpPost("login")]
 	public async Task<IActionResult> LoginUser([FromBody] LoginDTO model) {
 		var result = await userRepository.Login(model);
-		return Ok(result);
+			return Ok(result);
 	}
 	[HttpPost("forget-password-request")]
 	public async Task<IActionResult> ForgetPassword([FromBody] string email) {

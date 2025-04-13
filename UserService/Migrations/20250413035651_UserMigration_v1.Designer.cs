@@ -12,7 +12,7 @@ using UserService.Context;
 namespace UserService.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20250410023916_UserMigration_v1")]
+    [Migration("20250413035651_UserMigration_v1")]
     partial class UserMigration_v1
     {
         /// <inheritdoc />
@@ -193,6 +193,9 @@ namespace UserService.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("EmployeeStore")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");

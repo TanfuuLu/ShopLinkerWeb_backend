@@ -8,7 +8,7 @@ public interface IUserRepository {
 	Task Logout();
 	Task ForgetPassword(string email);
 	Task<ApplicationUser> ChangePassword(ChangePasswordDTO model);
-	Task<ApplicationUser> GetUserByIdAsync(Guid userId);
 	Task<ApplicationUser> GetUserByEmailAsync(string email);
+	Task<ICollection<ApplicationUser>> GetListUserById(List<int> listId);
 	Task UpdateUserAsync(ApplicationUser user);
 }

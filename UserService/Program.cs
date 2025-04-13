@@ -1,3 +1,4 @@
+using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Scalar.AspNetCore;
@@ -20,6 +21,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<JwtTokenService>();
 builder.AddNpgsqlDbContext<UserDbContext>("UserDatabase");
+builder.Services.AddMapster();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => {
 	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
 	options.Lockout.MaxFailedAccessAttempts = 3;

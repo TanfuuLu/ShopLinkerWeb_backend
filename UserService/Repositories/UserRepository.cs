@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MapsterMapper;
+using Microsoft.AspNetCore.Identity;
 using System.Net;
 using UserService.Context;
 using UserService.Models;
@@ -13,14 +14,16 @@ public class UserRepository : IUserRepository {
 	private readonly JwtTokenService jwtTokenService;
 	private readonly IHttpContextAccessor HttpResponse;
 	private readonly UserDbContext dbContext;
+	private readonly IMapper mapper;
 
-	public UserRepository(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, JwtTokenService jwtTokenService, IHttpContextAccessor httpContextAccessor, UserDbContext dbContext) {
+	public UserRepository(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, JwtTokenService jwtTokenService, IHttpContextAccessor httpContextAccessor, UserDbContext dbContext, IMapper mapper) {
 		this.userManager = userManager;
 		this.signInManager = signInManager;
 		this.emailService = emailService;
 		this.jwtTokenService = jwtTokenService;
 		this.HttpResponse = httpContextAccessor;
 		this.dbContext = dbContext;
+		this.mapper = mapper;
 	}
 	public async Task ForgetPassword(string email) {
 		var userExisted = await userManager.FindByEmailAsync(email);
@@ -64,7 +67,6 @@ public class UserRepository : IUserRepository {
 		var userExisted = await userManager.FindByEmailAsync(model.Email);
 		return userExisted;
 
-		return user;
 	}
 	public async Task<ApplicationUser> GetUserByEmailAsync(string email) {
 		var userExisted = await userManager.FindByEmailAsync(email);
@@ -74,18 +76,10 @@ public class UserRepository : IUserRepository {
 		return userExisted;
 	}
 
-	public async Task<ApplicationUser> GetUserByIdAsync(Guid userId) {
-		var userExisted = await userManager.FindByIdAsync(userId.ToString());
-		if(userExisted == null) {
-			return null;
-		}
-		return userExisted;
-	}
-
 	public async Task<dynamic> Login(LoginDTO model) {
 		var userExistes = await userManager.FindByEmailAsync(model.Email);
 		if(userExistes == null) {
-			return "Invalid Email or Password";
+			return "Not Found Account";
 		}
 		if(await userManager.IsLockedOutAsync(userExistes)) {
 			var lockoutEnd = await userManager.GetLockoutEndDateAsync(userExistes);
@@ -98,7 +92,7 @@ public class UserRepository : IUserRepository {
 				await userManager.SetLockoutEndDateAsync(userExistes, DateTimeOffset.UtcNow.AddMinutes(10));
 				return "User is locked out, Please try again in 10 minutes";
 			}
-			return"Invalid login";
+			return"Wrong Password";
 		}
 		await userManager.ResetAccessFailedCountAsync(userExistes);
 		var userRoles = await userManager.GetRolesAsync(userExistes);
@@ -110,9 +104,11 @@ public class UserRepository : IUserRepository {
 			Expires = DateTimeOffset.UtcNow.AddDays(1)
 		};
 		HttpResponse.HttpContext.Response.Cookies.Append("JwtToken", token, cookieOptions);
+		var resultMaped = mapper.Map<LoginResponse>(userExistes);
+		resultMaped.Roles = userRoles;
 		return new {
 			token,
-			userExistes
+			resultMaped
 		};
 	}
 
@@ -122,6 +118,7 @@ public class UserRepository : IUserRepository {
 			Email = model.Email,
 			PhoneNumber = model.Phonenumber,
 			EmailConfirmed = true,
+			EmployeeStore = model.EmployeeStore,
 		};
 		var result = await userManager.CreateAsync(user, model.Password);
 		if(!result.Succeeded) {
@@ -144,4 +141,20 @@ public class UserRepository : IUserRepository {
 		throw new NotImplementedException();
 	}
 
+	public async Task<ICollection<ApplicationUser>> GetListUserById(List<int> listId) {
+		if(listId == null || listId.Count == 0) {
+			return null;
+		}
+		ICollection<ApplicationUser> result = new List<ApplicationUser>();
+		foreach(var id in listId) {
+			var user = await userManager.FindByIdAsync(id.ToString());
+			if(user != null) {
+				result.Add(user);
+			}
+		}
+		if(result.Count == 0) {
+			return null;
+		}
+		return result;
+	}
 }

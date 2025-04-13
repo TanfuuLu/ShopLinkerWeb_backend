@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MigrationWorker\MigrationWorker.csproj" />
+    <ProjectReference Include="..\ShopService\ShopService.csproj" />
     <ProjectReference Include="..\UserService\UserService.csproj" />
   </ItemGroup>
 
