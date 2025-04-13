@@ -4,5 +4,5 @@ namespace UserService.Models;
 
 public class ApplicationUser : IdentityUser{
 	public string AvatarUser { get; set; } = string.Empty;
-	public int EmployeeStore { get; set; }
+	public int EmployeeShop { get; set; }
 }

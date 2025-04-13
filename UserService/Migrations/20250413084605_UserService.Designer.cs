@@ -12,8 +12,8 @@ using UserService.Context;
 namespace UserService.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20250413035651_UserMigration_v1")]
-    partial class UserMigration_v1
+    [Migration("20250413084605_UserService")]
+    partial class UserService
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -194,7 +194,7 @@ namespace UserService.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("EmployeeStore")
+                    b.Property<int>("EmployeeShop")
                         .HasColumnType("integer");
 
                     b.Property<bool>("LockoutEnabled")

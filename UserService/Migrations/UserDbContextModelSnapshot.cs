@@ -191,7 +191,7 @@ namespace UserService.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("EmployeeStore")
+                    b.Property<int>("EmployeeShop")
                         .HasColumnType("integer");
 
                     b.Property<bool>("LockoutEnabled")

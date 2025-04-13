@@ -14,20 +14,22 @@ var RabbitConfig = builder.AddRabbitMQ("RabbitMQ", userName: ThoUsername, passwo
 			.WithManagementPlugin();
 
 var UserDatabase = PostgreConfig.AddDatabase("UserDatabase");
-var StoreDatabase = PostgreConfig.AddDatabase("StoreDatabase");
+var ShopDatabase = PostgreConfig.AddDatabase("ShopDatabase");
 
 builder.AddProject<Projects.UserService>("userservice")
 	.WithReference(UserDatabase)
 	.WaitFor(UserDatabase)
 	.WithEndpoint("https", endpoint => endpoint.IsProxied = false);
-
+builder.AddProject<Projects.ShopService>("shopservice")
+	.WithReference(ShopDatabase)
+	.WaitFor(ShopDatabase)
+	.WithEndpoint("https", endpoint => endpoint.IsProxied = false);
 builder.AddProject<Projects.MigrationWorker>("migrationworker")
 		.WithReference(UserDatabase)
-		.WaitFor(UserDatabase);
+		.WithReference(ShopDatabase)
+		.WaitFor(UserDatabase)
+		.WaitFor(ShopDatabase);
 
-//builder.AddProject<Projects.ShopService>("shopservice")
-//	.WithReference(StoreDatabase)
-//	.WaitFor(StoreDatabase)
-//	.WithEndpoint("https", endpoint => endpoint.IsProxied = false);
+
 
 builder.Build().Run();

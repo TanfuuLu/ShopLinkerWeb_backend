@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace UserService.Migrations
 {
     /// <inheritdoc />
-    public partial class UserMigration_v1 : Migration
+    public partial class UserService : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,7 @@ namespace UserService.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     AvatarUser = table.Column<string>(type: "text", nullable: false),
-                    EmployeeStore = table.Column<int>(type: "integer", nullable: false),
+                    EmployeeShop = table.Column<int>(type: "integer", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),

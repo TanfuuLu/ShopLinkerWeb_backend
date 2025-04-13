@@ -118,7 +118,7 @@ public class UserRepository : IUserRepository {
 			Email = model.Email,
 			PhoneNumber = model.Phonenumber,
 			EmailConfirmed = true,
-			EmployeeStore = model.EmployeeStore,
+			EmployeeShop = model.EmployeeShop,
 		};
 		var result = await userManager.CreateAsync(user, model.Password);
 		if(!result.Succeeded) {
