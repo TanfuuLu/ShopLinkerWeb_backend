@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationWorker", "Migratio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopService", "ShopService\ShopService.csproj", "{5447ED98-9E5A-4418-A300-25D81315AAB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGatewayService", "ApiGatewayService\ApiGatewayService.csproj", "{88161BAD-CFB2-4551-907A-ADDD53BB0979}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{5447ED98-9E5A-4418-A300-25D81315AAB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5447ED98-9E5A-4418-A300-25D81315AAB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5447ED98-9E5A-4418-A300-25D81315AAB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88161BAD-CFB2-4551-907A-ADDD53BB0979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88161BAD-CFB2-4551-907A-ADDD53BB0979}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88161BAD-CFB2-4551-907A-ADDD53BB0979}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88161BAD-CFB2-4551-907A-ADDD53BB0979}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

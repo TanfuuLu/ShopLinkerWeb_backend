@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ApiGatewayService\ApiGatewayService.csproj" />
     <ProjectReference Include="..\MigrationWorker\MigrationWorker.csproj" />
     <ProjectReference Include="..\ShopService\ShopService.csproj" />
     <ProjectReference Include="..\UserService\UserService.csproj" />
