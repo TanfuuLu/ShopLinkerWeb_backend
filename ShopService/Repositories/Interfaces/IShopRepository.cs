@@ -9,4 +9,5 @@ public interface IShopRepository {
 	Task<bool> UpdateShop(Shop model);
 	Task<bool> DeleteShop(int id);
 	Task<bool> AddEmployee(int shopId, int userId);
+	Task<bool> RemoveEmployee(int shopId, int userId);
 }

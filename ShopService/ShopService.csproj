@@ -29,8 +29,4 @@
     <ProjectReference Include="..\ShopLinkerWeb.ServiceDefaults\ShopLinkerWeb.ServiceDefaults.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Handlers\Queries\" />
-  </ItemGroup>
-
 </Project>

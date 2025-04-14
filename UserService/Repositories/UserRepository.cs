@@ -1,6 +1,8 @@
 ﻿using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Security.Claims;
 using UserService.Context;
 using UserService.Models;
 using UserService.Repositories.Interfaces;
@@ -96,6 +98,7 @@ public class UserRepository : IUserRepository {
 		}
 		await userManager.ResetAccessFailedCountAsync(userExistes);
 		var userRoles = await userManager.GetRolesAsync(userExistes);
+
 		var token = jwtTokenService.GenerateToken(userExistes, userRoles);
 		var cookieOptions = new CookieOptions {
 			HttpOnly = true,

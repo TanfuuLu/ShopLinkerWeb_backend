@@ -81,7 +81,7 @@ if(app.Environment.IsDevelopment()) {
 	app.MapScalarApiReference();
 	app.MapOpenApi();
 }
-app.UseCors("AllowAllOrigins");	
+app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

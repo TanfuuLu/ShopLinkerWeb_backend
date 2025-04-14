@@ -19,9 +19,9 @@ public class ShopRepository : IShopRepository {
 		var itemList = await dbContext.Shops.FirstOrDefaultAsync(x => x.Id == shopId);
 		if(itemList == null) {
 			return false;
-		}
+		} 
 		itemList.Employee.Add(userId);
-		dbContext.Shops.Update(itemList);
+		
 		var result = await dbContext.SaveChangesAsync();
 		if(result > 0) {
 			return true;
@@ -75,12 +75,31 @@ public class ShopRepository : IShopRepository {
 		}
 	}
 
+	public async Task<bool> RemoveEmployee(int shopId, int userId) {
+		var list = await dbContext.Shops.FirstOrDefaultAsync(s => s.Id == shopId);
+		if(list == null) {
+			return false;
+		}
+		if(list.Employee.Contains(userId)) {
+			list.Employee.Remove(userId);
+		} else {
+			return false;
+		}
+		await dbContext.SaveChangesAsync();
+		return true;
+	}
+
 	public async Task<bool> UpdateShop(Shop model) {
 		var item = await dbContext.Shops.FirstOrDefaultAsync(x => x.Id == model.Id);
 		if(item == null) {
 			return false;
+		} else {
+			item.Employee = model.Employee;
+			item.ManagerEmail = model.ManagerEmail;
+			item.ManagerName = model.ManagerName;
+			item.ManagerPhoneNumber = model.ManagerPhoneNumber;
 		}
-		dbContext.Shops.Update(model);
+		
 		var result = await dbContext.SaveChangesAsync();
 		if(result > 0) {
 			return true;
