@@ -14,11 +14,13 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddMapster();
+builder.AddRedisClient("Redis");
 builder.Services.AddMediator(options => {
 	options.ServiceLifetime = ServiceLifetime.Scoped;
 });
 builder.AddNpgsqlDbContext<ShopDbContext>("ShopDatabase");
 builder.Services.AddScoped<IShopRepository, ShopRepository>();
+builder.Services.AddScoped<IRedisRepository, RedisRepository>();
 var app = builder.Build();
 
 app.MapDefaultEndpoints();

@@ -1,5 +1,6 @@
 ﻿using MapsterMapper;
 using Mediator;
+using Newtonsoft.Json;
 using ShopService.Models;
 using ShopService.Models.DTO;
 using ShopService.Repositories.Interfaces;
@@ -11,20 +12,30 @@ public record GetShopByIdQuery(int id) : IRequest<GetShopResponse> {
 public class GetShopByIdQueryHandler : IRequestHandler<GetShopByIdQuery, GetShopResponse> {
 	private readonly IShopRepository _shopRepository;
 	private readonly IMapper _mapper;
+	private readonly IRedisRepository _redisRepository;
 
-	public GetShopByIdQueryHandler(IShopRepository shopRepository, IMapper mapper) {
+	public GetShopByIdQueryHandler(IShopRepository shopRepository, IMapper mapper, IRedisRepository redisRepository) {
 		this._shopRepository = shopRepository;
 		this._mapper = mapper;
+		this._redisRepository = redisRepository;
 	}
 
 	public async ValueTask<GetShopResponse> Handle(GetShopByIdQuery request, CancellationToken cancellationToken) {
-		var result = await _shopRepository.GetById(request.id);
-		var mappedItem = _mapper.Map<GetShopResponse>(result);
-		if(result == null) {
-			throw new Exception("Shop not found");
+		var cacheKey = $"shop:{request.id}";
+		var cachedShop = await _redisRepository.GetItemAsync(cacheKey);
+		if(cachedShop == null) {
+			var result = await _shopRepository.GetById(request.id);
+			if(result != null) {
+				var mappedItem = _mapper.Map<GetShopResponse>(result);
+				var jsonItem = JsonConvert.SerializeObject(result);
+				await _redisRepository.SetItem(cacheKey, jsonItem);
+				return mappedItem;
+			} else {
+				return null;
+			}
 		} else {
-			return mappedItem;
+			var mapItem = _mapper.Map<GetShopResponse>(cachedShop);
+			return mapItem;
 		}
-
 	}
 }

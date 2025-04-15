@@ -22,6 +22,7 @@ var ShopService = builder.AddProject<Projects.UserService>("userservice")
 	.WithEndpoint("https", endpoint => endpoint.IsProxied = false);
 var UserSerivce = builder.AddProject<Projects.ShopService>("shopservice")
 	.WithReference(ShopDatabase)
+	.WithReference(RedisConfig)
 	.WaitFor(ShopDatabase)
 	.WithEndpoint("https", endpoint => endpoint.IsProxied = false);
 builder.AddProject<Projects.MigrationWorker>("migrationworker")
