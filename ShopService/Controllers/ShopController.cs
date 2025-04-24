@@ -23,7 +23,7 @@ public class ShopController : ControllerBase {
 		if(result != null) {
 			return Ok(result);
 		} else {
-			return BadRequest("Failed to create shop");
+			return BadRequest("Failed to create shop");	
 		}
 	}
 	[HttpGet("get-all-shop")]

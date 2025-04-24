@@ -1,3 +1,4 @@
+using EmployeeService.Context;
 using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Trace;
 using ShopService.Context;
@@ -24,9 +25,10 @@ public class Worker : BackgroundService
 			using var scope = serviceProvider.CreateScope();
 			var UserDb = scope.ServiceProvider.GetRequiredService<UserDbContext>();
 			var ShopDb = scope.ServiceProvider.GetRequiredService<ShopDbContext>();
-
+			var EmployeeDb = scope.ServiceProvider.GetRequiredService<EmployeeDbContext>();
 			await EnsureDatabaseAsync(ShopDb, stoppingToken);
 			await EnsureDatabaseAsync(UserDb, stoppingToken);
+			await EnsureDatabaseAsync(EmployeeDb, stoppingToken);
 
 		}
 		catch(Exception ex) {
