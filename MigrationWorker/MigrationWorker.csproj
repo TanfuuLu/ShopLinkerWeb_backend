@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EmployeeService\EmployeeService.csproj" />
+    <ProjectReference Include="..\InventoryService\InventoryService.csproj" />
     <ProjectReference Include="..\ShopLinkerWeb.ServiceDefaults\ShopLinkerWeb.ServiceDefaults.csproj" />
     <ProjectReference Include="..\ShopService\ShopService.csproj" />
     <ProjectReference Include="..\UserService\UserService.csproj" />

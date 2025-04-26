@@ -2,6 +2,7 @@ using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Scalar.AspNetCore;
+using ShopLinkerWeb.ServiceDefaults;
 using UserService.Context;
 using UserService.Models;
 using UserService.Repositories;

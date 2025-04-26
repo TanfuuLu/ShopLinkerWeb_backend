@@ -1,5 +1,6 @@
 using Mapster;
 using Scalar.AspNetCore;
+using ShopLinkerWeb.ServiceDefaults;
 using ShopService.Context;
 using ShopService.Repositories;
 using ShopService.Repositories.Interfaces;

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using ShopLinkerWeb.ServiceDefaults;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);

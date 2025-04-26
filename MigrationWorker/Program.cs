@@ -1,5 +1,7 @@
 using EmployeeService.Context;
+using InventoryService.Context;
 using MigrationWorker;
+using ShopLinkerWeb.ServiceDefaults;
 using ShopService.Context;
 using UserService.Context;
 
@@ -11,5 +13,6 @@ builder.Services.AddOpenTelemetry().WithTracing(trace => trace.AddSource(nameof(
 builder.AddNpgsqlDbContext<UserDbContext>("UserDatabase");
 builder.AddNpgsqlDbContext<ShopDbContext>("ShopDatabase");
 builder.AddNpgsqlDbContext<EmployeeDbContext>("EmployeeDatabase");
+builder.AddNpgsqlDbContext<InventoryDbContext>("InventoryDatabase");
 var host = builder.Build();
 host.Run();

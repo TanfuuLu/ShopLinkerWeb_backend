@@ -1,4 +1,5 @@
 using EmployeeService.Context;
+using InventoryService.Context;
 using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Trace;
 using ShopService.Context;
@@ -26,9 +27,11 @@ public class Worker : BackgroundService
 			var UserDb = scope.ServiceProvider.GetRequiredService<UserDbContext>();
 			var ShopDb = scope.ServiceProvider.GetRequiredService<ShopDbContext>();
 			var EmployeeDb = scope.ServiceProvider.GetRequiredService<EmployeeDbContext>();
+			var InventoryDb = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
 			await EnsureDatabaseAsync(ShopDb, stoppingToken);
 			await EnsureDatabaseAsync(UserDb, stoppingToken);
 			await EnsureDatabaseAsync(EmployeeDb, stoppingToken);
+			await EnsureDatabaseAsync(InventoryDb, stoppingToken);
 
 		}
 		catch(Exception ex) {

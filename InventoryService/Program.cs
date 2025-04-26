@@ -1,6 +1,6 @@
-using EmployeeService.Context;
-using EmployeeService.Interfaces;
-using EmployeeService.Repositories;
+using InventoryService.Context;
+using InventoryService.Interfaces;
+using InventoryService.Repositories;
 using Mapster;
 using Scalar.AspNetCore;
 using ShopLinkerWeb.ServiceDefaults;
@@ -14,13 +14,11 @@ builder.AddServiceDefaults();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddMediator(options => {
-	options.ServiceLifetime = ServiceLifetime.Scoped;
-});
 builder.Services.AddMapster();
-builder.AddNpgsqlDbContext<EmployeeDbContext>("EmployeeDatabase");
-builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddMediator(options => options.ServiceLifetime = ServiceLifetime.Scoped);
+builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 
+builder.AddNpgsqlDbContext<InventoryDbContext>("InventoryDatabase");
 var app = builder.Build();
 
 app.MapDefaultEndpoints();

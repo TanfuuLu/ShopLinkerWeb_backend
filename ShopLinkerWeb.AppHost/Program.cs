@@ -16,6 +16,7 @@ var RabbitConfig = builder.AddRabbitMQ("RabbitMQ", userName: ThoUsername, passwo
 var UserDatabase = PostgreConfig.AddDatabase("UserDatabase");
 var ShopDatabase = PostgreConfig.AddDatabase("ShopDatabase");
 var EmployeeDatabase = PostgreConfig.AddDatabase("EmployeeDatabase");
+var InventoryDatabase = PostgreConfig.AddDatabase("InventoryDatabase");
 
 var ShopService = builder.AddProject<Projects.UserService>("userservice")
 	.WithReference(UserDatabase)
@@ -30,6 +31,8 @@ builder.AddProject<Projects.MigrationWorker>("migrationworker")
 		.WithReference(UserDatabase)
 		.WithReference(ShopDatabase)
 		.WithReference(EmployeeDatabase)
+		.WithReference(InventoryDatabase)
+		.WaitFor(InventoryDatabase)
 		.WaitFor(EmployeeDatabase)
 		.WaitFor(UserDatabase)
 		.WaitFor(ShopDatabase);
@@ -42,6 +45,10 @@ builder.AddProject<Projects.ApiGatewayService>("apigatewayservice")
 builder.AddProject<Projects.EmployeeService>("employeeservice")
 	.WithReference(EmployeeDatabase)
 	.WithReference(RedisConfig)
+	.WithEndpoint("https", endpoint => endpoint.IsProxied = false);
+
+builder.AddProject<Projects.InventoryService>("inventoryservice")
+	.WithReference(InventoryDatabase)
 	.WithEndpoint("https", endpoint => endpoint.IsProxied = false);
 
 builder.Build().Run();
