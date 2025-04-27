@@ -13,7 +13,7 @@ public class InventoryItem {
 	[Range(0,100)]
 	public int Quantity { get; set; }
 	[Required]
-	public TypeItemEnum TypeItem {  get; set; }
+	public int TypeItem {  get; set; }
 	public List<int>? ShopID { get; set; } = new List<int>();
 	public int CategoryID { get; set; }
 	public Category Category { get; set; }

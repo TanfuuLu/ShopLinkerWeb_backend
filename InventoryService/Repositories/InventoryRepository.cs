@@ -63,6 +63,16 @@ public class InventoryRepository : IInventoryRepository {
 		return lstItem;
 	}
 
+	public async Task<ICollection<InventoryItem>> GetAllItemsByCategoryIDAsync(int categoryID) {
+		var lstItem = await db.InventoryItems.Where(x => x.CategoryID == categoryID).ToListAsync();
+		if (lstItem == null) {
+			return null;
+		}
+		else {
+			return lstItem;
+		}
+	}
+
 	public async Task<ICollection<InventoryItem>> GetAllItemsByShopIDAsync(int shopID) {
 		var lstItem = await db.InventoryItems.Where(x => x.ShopID.Contains(shopID)).ToListAsync();
 		if (lstItem == null) {
@@ -87,12 +97,17 @@ public class InventoryRepository : IInventoryRepository {
 		return checkItem;
 	}
 
-	public async Task<bool> UpdateItemAsync(InventoryItem itemInput) {
-		var item = await db.InventoryItems.FirstOrDefaultAsync(i => i.ItemID == itemInput.ItemID);
+	public async Task<bool> UpdateItemAsync(InventoryItem itemInput, int id) {
+		var item = await db.InventoryItems.FirstOrDefaultAsync(i => i.ItemID == id);
 		if (item == null) {
 			return false;
 		}
 		item.Quantity = itemInput.Quantity;
+		item.ShopID = itemInput.ShopID;
+		item.ItemName = itemInput.ItemName;
+		item.TypeItem = itemInput.TypeItem;
+		item.CategoryID = itemInput.CategoryID;
+		
 		var result = await db.SaveChangesAsync();
 		if (result > 0) {
 			return true;
@@ -101,5 +116,4 @@ public class InventoryRepository : IInventoryRepository {
 			return false;
 		}
 	}
-}
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -33,7 +34,7 @@ namespace InventoryService.Migrations
                     ItemName = table.Column<string>(type: "text", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     TypeItem = table.Column<int>(type: "integer", nullable: false),
-                    ShopID = table.Column<string>(type: "text", nullable: true),
+                    ShopID = table.Column<List<int>>(type: "integer[]", nullable: true),
                     CategoryID = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

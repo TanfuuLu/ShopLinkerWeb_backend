@@ -17,6 +17,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddMapster();
 builder.Services.AddMediator(options => options.ServiceLifetime = ServiceLifetime.Scoped);
 builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 builder.AddNpgsqlDbContext<InventoryDbContext>("InventoryDatabase");
 var app = builder.Build();
