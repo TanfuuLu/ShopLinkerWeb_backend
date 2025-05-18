@@ -4,6 +4,7 @@ namespace InventoryService.Interfaces;
 
 public interface IInventoryRepository {
 	Task<ICollection<InventoryItem>> GetAllItemsAsync();
+	Task<ICollection<InventoryItem>> GetItemByListID(List<int> lstItemID);
 	Task<ICollection<InventoryItem>> GetAllItemsByShopIDAsync(int shopID);
 	Task<ICollection<InventoryItem>> GetAllItemsByCategoryIDAsync(int categoryID);
 	Task<InventoryItem?> GetItemByIdAsync(int id);

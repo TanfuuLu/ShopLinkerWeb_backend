@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InventoryService.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    [Migration("20250427074804_InventoryMigration")]
+    [Migration("20250428081426_InventoryMigration")]
     partial class InventoryMigration
     {
         /// <inheritdoc />
@@ -55,6 +55,9 @@ namespace InventoryService.Migrations
                     b.Property<string>("ItemName")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");

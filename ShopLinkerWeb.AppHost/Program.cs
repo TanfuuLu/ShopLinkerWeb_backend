@@ -17,6 +17,7 @@ var UserDatabase = PostgreConfig.AddDatabase("UserDatabase");
 var ShopDatabase = PostgreConfig.AddDatabase("ShopDatabase");
 var EmployeeDatabase = PostgreConfig.AddDatabase("EmployeeDatabase");
 var InventoryDatabase = PostgreConfig.AddDatabase("InventoryDatabase");
+var OrderDatabase = PostgreConfig.AddDatabase("OrderDatabase");
 
 var ShopService = builder.AddProject<Projects.UserService>("userservice")
 	.WithReference(UserDatabase)
@@ -32,10 +33,12 @@ builder.AddProject<Projects.MigrationWorker>("migrationworker")
 		.WithReference(ShopDatabase)
 		.WithReference(EmployeeDatabase)
 		.WithReference(InventoryDatabase)
+		.WithReference(OrderDatabase)
 		.WaitFor(InventoryDatabase)
 		.WaitFor(EmployeeDatabase)
 		.WaitFor(UserDatabase)
-		.WaitFor(ShopDatabase);
+		.WaitFor(ShopDatabase)
+		.WaitFor(OrderDatabase);
 
 
 builder.AddProject<Projects.ApiGatewayService>("apigatewayservice")
@@ -49,6 +52,11 @@ builder.AddProject<Projects.EmployeeService>("employeeservice")
 
 builder.AddProject<Projects.InventoryService>("inventoryservice")
 	.WithReference(InventoryDatabase)
+	.WithEndpoint("https", endpoint => endpoint.IsProxied = false);
+
+builder.AddProject<Projects.OrderService>("orderservice")
+	.WithReference(OrderDatabase)
+	.WaitFor(OrderDatabase)
 	.WithEndpoint("https", endpoint => endpoint.IsProxied = false);
 
 builder.Build().Run();

@@ -12,6 +12,7 @@ public class InventoryItem {
 	[Required]
 	[Range(0,100)]
 	public int Quantity { get; set; }
+	public int Price { get; set; }
 	[Required]
 	public int TypeItem {  get; set; }
 	public List<int>? ShopID { get; set; } = new List<int>();

@@ -53,6 +53,9 @@ namespace InventoryService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 

@@ -50,6 +50,24 @@ public class InventoryController : ControllerBase {
 		}
 		return Ok(result);
 	}
+	[HttpGet("get-inventory-item-by-category/{categoryId:int}")]
+	public async Task<IActionResult> GetInventoryItemByCategory(int categoryId) {
+		var query = new GetItemByCategoryIdQuery(categoryId);
+		var result = await mediator.Send(query);
+		if (result == null) {
+			return NotFound();
+		}
+		return Ok(result);
+	}
+	[HttpGet("get-item-by-list-item-id")]
+	public async Task<IActionResult> GetItemByListId([FromBody] List<int> lstItemID) {
+		var query = new GetItemByListIDQuery(lstItemID);
+		var result = await mediator.Send(query);
+		if (result == null) {
+			return NotFound();
+		}
+		return Ok(result);
+	}
 	[HttpPost("create-inventory-item")]
 	public async Task<IActionResult> CreateInventoryItem([FromBody] CreateItemRequest item) {
 		if (item == null) {

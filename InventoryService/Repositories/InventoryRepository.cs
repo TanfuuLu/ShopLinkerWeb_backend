@@ -89,8 +89,17 @@ public class InventoryRepository : IInventoryRepository {
 		return checkItem;
 	}
 
+	public async Task<ICollection<InventoryItem>> GetItemByListID(List<int> lstItemID) {
+		var lstitem = await db.InventoryItems.Where(x => lstItemID.Contains(x.ItemID)).ToListAsync();
+		if (lstitem == null) {
+			return null;
+		}
+		return lstitem;
+
+	}
+
 	public async Task<InventoryItem?> GetItemByNameAsync(string name) {
-		var checkItem = await db.InventoryItems.FirstOrDefaultAsync(i => i.ItemName == name);
+		var checkItem = await db.InventoryItems.FirstOrDefaultAsync(i => i.ItemName.ToLower() == name.ToLower());
 		if (checkItem == null) {
 			return null;
 		}
@@ -104,6 +113,7 @@ public class InventoryRepository : IInventoryRepository {
 		}
 		item.Quantity = itemInput.Quantity;
 		item.ShopID = itemInput.ShopID;
+		item.Price = itemInput.Price;
 		item.ItemName = itemInput.ItemName;
 		item.TypeItem = itemInput.TypeItem;
 		item.CategoryID = itemInput.CategoryID;

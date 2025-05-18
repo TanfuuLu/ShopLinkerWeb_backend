@@ -33,6 +33,7 @@ namespace InventoryService.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ItemName = table.Column<string>(type: "text", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
+                    Price = table.Column<int>(type: "integer", nullable: false),
                     TypeItem = table.Column<int>(type: "integer", nullable: false),
                     ShopID = table.Column<List<int>>(type: "integer[]", nullable: true),
                     CategoryID = table.Column<int>(type: "integer", nullable: false)
